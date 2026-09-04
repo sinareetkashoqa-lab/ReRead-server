@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth.js";
 import bookRoutes from "./routes/books.js";
 import borrowRoutes from "./routes/borrow.js";
+import userRoutes from "./routes/users.js";
 
 import pgclient from "./db/db.js";
 
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);
 app.use("/api/borrow-requests", borrowRoutes);
+app.use("/api/users", userRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ message: "🚫 Route not found" });
