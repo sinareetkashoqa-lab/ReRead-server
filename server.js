@@ -8,6 +8,7 @@ import bookRoutes from "./routes/books.js";
 import borrowRoutes from "./routes/borrow.js";
 import userRoutes from "./routes/users.js";
 import reviewRoutes from "./routes/reviews.js";
+import adminRoutes from "./routes/admin.js";
 
 import pgclient from "./db/db.js";
 
@@ -30,6 +31,7 @@ app.use("/api/books", bookRoutes);
 app.use("/api/borrow-requests", borrowRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ message: "🚫 Route not found" });
