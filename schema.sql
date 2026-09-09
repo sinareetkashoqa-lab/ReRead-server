@@ -1,0 +1,54 @@
+-- Users
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(50) UNIQUE NOT NULL,
+  email VARCHAR(100) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  full_name VARCHAR(100),
+  location VARCHAR(255),
+  bio TEXT,
+  role VARCHAR(20) DEFAULT 'user',
+  is_suspended BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Books
+CREATE TABLE IF NOT EXISTS books (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  title VARCHAR(255) NOT NULL,
+  author VARCHAR(255),
+  genre VARCHAR(100),
+  isbn VARCHAR(20),
+  description TEXT,
+  condition VARCHAR(50) DEFAULT 'Good',
+  cover_image_url TEXT,
+  owner_notes TEXT,
+  is_available BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Borrow Requests
+CREATE TABLE IF NOT EXISTS borrow_requests (
+  id SERIAL PRIMARY KEY,
+  book_id INTEGER REFERENCES books(id) ON DELETE CASCADE,
+  requester_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  status VARCHAR(20) DEFAULT 'pending',
+  message TEXT,
+  request_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  return_date DATE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Reviews
+CREATE TABLE IF NOT EXISTS reviews (
+  id SERIAL PRIMARY KEY,
+  book_id INTEGER REFERENCES books(id) ON DELETE CASCADE,
+  reviewer_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  comment TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
