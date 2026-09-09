@@ -22,7 +22,7 @@ router.post("/register", async (req, res) => {
     const result = await pgclient.query(
       `INSERT INTO users (username, email, password, full_name, location)
              VALUES ($1, $2, $3, $4, $5) 
-             RETURNING id, username, email, full_name, location, role`,
+             RETURNING id, username, email, full_name, location, role, created_at`,
       [username, email, password, fullName, location],
     );
 
@@ -57,6 +57,7 @@ router.post("/login", async (req, res) => {
         full_name: user.full_name,
         location: user.location,
         role: user.role,
+        created_at: user.created_at,
       },
     });
   } catch (error) {
